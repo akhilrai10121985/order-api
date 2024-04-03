@@ -14,7 +14,7 @@ import java.io.IOException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(MemberNotFoundExcepion.class)
+    @ExceptionHandler(InvalidRequestExcepion.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ErrorInfo handleMemberNotFoundExcepion(HttpServletRequest request) {

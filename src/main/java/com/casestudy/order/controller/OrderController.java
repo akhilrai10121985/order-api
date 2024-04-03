@@ -1,7 +1,7 @@
 package com.casestudy.order.controller;
 
 import com.casestudy.model.Deal;
-import com.casestudy.order.error.MemberNotFoundExcepion;
+import com.casestudy.order.error.InvalidRequestExcepion;
 import com.casestudy.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,11 +33,13 @@ public class OrderController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Deal> createDealOrder(@RequestBody Deal deal) {
+        log.info("Received create deal order request {}", deal);
         if (deal == null) {
-            throw new MemberNotFoundExcepion("not found");
+            log.error("invalid payload");
+            throw new InvalidRequestExcepion("invalid payload");
         } else {
             orderService.placeDealOrder(deal);
-            log.info("deal {}", deal);
+            log.info("create deal order request has been placed for processing {}", deal);
             return new ResponseEntity<>(deal, HttpStatus.CREATED);
         }
     }
